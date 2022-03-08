@@ -1,22 +1,22 @@
+from collections import defaultdict
+
 
 class Graph:
-    def __init__(self, gdict = None):
-        if gdict is None:
-            gdict = []
+    def __init__(self, directed=False):
+        self.gdict = defaultdict(set)
+        self.directed = directed
 
-        self.gdict = gdict
+    def get_vertices(self):
+        """Return all vertices"""
+        return self.gdict.keys()
 
-    # Get the keys of the dictionary
-    def getVertices(self):
-        return list(self.gdict.keys())
-
-    # Add the vertex as a key
-    def addVertex(self, vertex):
+    def add_vertex(self, vertex):
+        """ Add vertex without connection """
         if vertex not in self.gdict:
-            self.gdict[vertex] = []
+            self.gdict[vertex] = set()
 
-    # List the edge names
     def edges(self):
+        """ Return list of edges in graph """
         edgename = []
 
         for vertex in self.gdict:
@@ -25,11 +25,27 @@ class Graph:
                     edgename.append({vertex, nextvertex})
         return edgename
 
-    # Add the new edge
-    def addEdge(self, edge):
-        edge = set(edge)
-        (vertex1, vertex2) = tuple(edge)
-        if vertex1 in self.gdict:
-            self.gdict[vertex1].append(vertex2)
-        else:
-            self.gdict[vertex1] = [vertex2]
+    def add_edge(self, vertex1, vertex2):
+        """ Add connection between vertex1 and vertex2 """
+
+        self.gdict[vertex1].add(vertex2)
+        if not self.directed:
+            self.gdict[vertex2].add(vertex1)
+
+    def remove_vertex(self, vertex):
+        """ Remove all connections with vertex and them destroy itself """
+        for _, edges in self.gdict.items():
+            try:
+                edges.remove(vertex)
+            except KeyError:
+                pass
+
+        try:
+            self.gdict.pop(vertex)
+        except KeyError:
+            pass
+
+    def is_connected(self, vertex1, vertex2):
+        """ Vertex1 is directly connected with vertex2 """
+
+        return vertex1 in self.gdict and vertex2 in self.gdict[vertex1]

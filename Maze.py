@@ -46,7 +46,7 @@ class Maze:
         plt.show()
 
     #   Randomized depth-first search  ->  Iterative implementation
-    def DFS(self):
+    def dfs(self):
 
         # STEP 1: Choose the initial cell, mark it as visited and push it to the stack
         self.grid[0][0].visit()

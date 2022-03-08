@@ -2,15 +2,17 @@ import collections
 from Graph import *
 
 
-class Maze_solver:
-    def __init__(self):
+class MazeSolver:
+    def __init__(self, maze):
         self.graph = Graph()
+        self.maze = maze
 
     def maze2graph(self):
         pass
 
+
     # Depth First Traversal
-    def DFS(self, start, stop, visited=None):
+    def dfs(self, start, stop, visited=None):
         if visited is None:
             visited = set()
         visited.add(start)
@@ -23,7 +25,7 @@ class Maze_solver:
         return visited
 
     # Breadth First Traversal
-    def BFS(self, start, stop):
+    def bfs(self, start, stop):
         seen, queue = set([start]), collections.deque([start])
         while queue:
             vertex = queue.popleft()
