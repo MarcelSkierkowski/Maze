@@ -3,8 +3,10 @@ from Cell import *
 from matplotlib import pyplot as plt
 
 
-# Remove wall between neighbours
+#
 def remove_wall(current_cell, next_cell):
+    """ Remove wall between neighbours """
+
     if next_cell.x - current_cell.x == 1:
         next_cell.left = False
         current_cell.right = False
